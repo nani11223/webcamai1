@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Spatial Shape UI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MediaPipe dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    
+    <!-- Three.js dependency -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0f172a;
+        }
+        /* Mirror video so interactions feel natural */
+        #videoElement {
+            transform: scaleX(-1);
+        }
+        /* Canvases overlay precisely */
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 h-screen w-screen flex flex-col items-center justify-center font-sans overflow-hidden">
+    
+    <div class="relative w-full max-w-6xl aspect-video bg-black rounded-xl shadow-[0_0_40px_rgba(56,189,248,0.15)] overflow-hidden border border-slate-700">
+        <!-- 1. Video Layer (Bottom) -->
+        <video id="videoElement" class="absolute top-0 left-0 w-full h-full object-cover" autoplay playsinline></video>
+        
+        <!-- 2. WebGL Layer (Middle) - No mirroring here, mapped inside JS -->
+        <canvas id="threeCanvas" class="layer z-10"></canvas>
+        
+        <!-- 3. UI/HUD Layer (Top) -->
+        <canvas id="uiCanvas" class="layer z-20"></canvas>
+    </div>
+
+    <!-- Application Logic (ES Module) -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
